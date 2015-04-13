@@ -33,30 +33,24 @@ static int printsum(int *sum, int print)
 
 int main(int argc, char** argv)
 {
-	int i, k;
+	int i, j;
 	int sum[SUM_LEN];
-	int temp[SUM_LEN];
 	int carry;
 	
 	memset(&sum, 0, sizeof(sum));
 	
 	sum[SUM_LEN-1] = 2;
 	for (i=2; i<=1000; i++) {
-		memcpy(&temp, &sum, sizeof(sum));
 		carry = 0;
-		for (k=(SUM_LEN-1); k>=0; k--) {
-			sum[k] = sum[k]+temp[k]+carry;
-			carry = sum[k]/10;
-			sum[k] = sum[k]%10;
+		for (j=(SUM_LEN-1); j>=0; j--) {
+			sum[j] = sum[j]*2+carry;
+			carry = sum[j]/10;
+			sum[j] %= 10;
 		}
 	}
 	
-	fprintf(stderr, "[Problem 16] ");
-	carry = printsum(sum, 0);
-	
-	fprintf(stderr, "%d\n", carry);
-	
+	carry = printsum(sum, 1);
+	fprintf(stderr, "[Problem 16] %d\n", carry);
 	
 	return 0;
 }
-
